@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="styles/reset.css">
+		<link rel="stylesheet" href="styles/style.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.2/react-redux.min.js"></script>
+		<script src= "js/createSelectList.js"></script>
+		<script type="text/babel" src="js/Model.js"></script>
+		<script type="text/babel" src="js/Controller.js"></script>
+	</head>
+	<body>
+
+		<div id="display_library"></div>
+
+		<script type="text/babel">
+		var thunk = ReduxThunk.default
+		var createStore = Redux.createStore;
+		var applyMiddleware = Redux.applyMiddleware;
+		var store = createStore(reducer, applyMiddleware(thunk));
+
+			class FilmLibrary extends React.Component{
+				render(){
+					return(
+					<Provider store={store}>
+						<section>
+							<div id="form_wrap">
+								<fieldset>
+									<legend>Добавление фильма</legend>
+									<FormFilmInfo />
+								</fieldset>
+							</div>
+							<div id="table_wrap">
+								<TableFilmInfo />
+							</div>
+						</section>
+					</Provider>
+					)
+				}
+			}
+/*20*/
+			class FormFilmInfo extends React.Component{
+				render(){
+					return(
+								<form id="form_film_info" onSubmit={this.props.hendlerSubmit}>
+									<input
+										type="text"
+										name="film_title"
+										placeholder="Название фильма"
+										value={this.props.film_title}
+										size="40"
+										onChange={this.props.hendlerTitleChange} />
+									<select
+										name="film_genre"
+										id="genre"
+										onChange = {this.props.hendlerGenreChange}>
+											<option value={this.props.film_genre}></option>
+									</select>
+									<select
+										name="film_year"
+										id="year"
+										onChange={this.props.hendlerYearChange}>
+											<option value={this.props.film_year}></option>
+									</select>
+									<button
+										id = "sbmt"
+										type="submit">Сохранить
+									</button>
+								</form>
+					);
+				}
+			}; /* end of FormFilmInfo */
+
+			class TableFilmInfo extends React.Component{
+				render(){
+					return(
+							<table>
+								<thead>
+									<tr>
+										<td>Название</td>
+										<td>Жанр</td>
+										<td>Год</td>
+										<td>Рейтинг</td>
+									</tr>
+								</thead>
+								<tbody id="info_table">
+								</tbody>
+							</table>
+					);
+				}
+			}; /* end of TableFilmInfo */
+
+			ReactDOM.render(
+				<Provider store = {store}>
+					<FilmLibrary />
+				</provider>
+				document.getElementById('display_library')
+			);
+
+		var Years = [2000, 2001, 2002, 2003, 2004, 2005];
+		var Genres = ["Боевик", "Вестерн", "Детектив", "Документальный", "Комедия", "Приключения"];
+
+		createSelectList(Years, "year");
+		createSelectList(Genres, "genre");
+
+
+
+		</script>
+	</body>
+</html>

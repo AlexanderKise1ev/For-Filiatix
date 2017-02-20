@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="styles/reset.css">
+		<link rel="stylesheet" href="styles/style.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+		<script src= "js/main.js"></script>
+
+		<!-- -->
+<link href="styles/jquery.rating.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
+<script type="text/javascript">
+window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1.6.2.min.js"><\/script>');
+</script>
+
+<script type="text/javascript" src="js/jquery.rating.min.js"></script>
+		<script type="text/javascript">
+$(function(){
+
+	$('#rating_1').rating({
+		fx: 'full',
+        image: 'images/stars.png',
+        loader: 'images/ajax-loader.gif',
+        width: 32,
+		url: 'rating.php'
+	});
+
+
+})
+</script>
+	</head>
+	<body>
+		<section>
+			<div id="form_wrap">
+				<fieldset>
+					<legend>Добавление фильма</legend>
+					<form id="form_film_info">
+						<input type="text" name="title" id="film_title" placeholder="Название фильма" value="" size ="40">
+						<select name="genre" id="film_genre" >
+								<option value="Боевик">Боевик</option>
+								<option value="Военный">Военный</option>
+								<option value="Детектив">Детектив</option>
+								<option value="Комедия">Комедия</option>
+								<option value="Приключения">Приключения</option>
+						</select>
+						<select name="year" id="film_year">
+								<option value="2012">2012</option>
+								<option value="2013">2013</option>
+								<option value="2014">2014</option>
+								<option value="2015">2015</option>
+								<option value="2016">2016</option>
+						</select>
+						<br>
+							<div class="wrap">
+
+								<div id="rating_1">
+									<input type="hidden" class="val" value="1.75"/>
+									<input type="hidden" class="votes" value="2"/>
+								</div>
+							<br><br>
+
+							</div>
+						<br>
+						<button id = "sbmt" type="submit">Сохранить</button>
+					</form>
+				</fieldset>
+			</div>
+			<div id="table_wrap">
+				<table>
+					<thead>
+						<tr>
+							<td>Название</td>
+							<td>Жанр</td>
+							<td>Год</td>
+							<td>Рейтинг</td>
+						</tr>
+					</thead>
+					<tbody id="info_table">
+
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+
+		<div id="output"></div>
+
+		<script type="text/babel">
+			$(document).ready(function(){
+				$('#form_film_info').submit(function() {
+					var filmTitle = $(this).children('input[name="title"]').val();
+					var filmGenre = $(this).children('select[name="genre"]').val();
+					var filmYear = $(this).children('select[name="year"]').val();
+
+					class Tr_input extends React.Component {
+						render() {
+							return <tr>
+										<td>{filmTitle}</td>
+										<td>{filmGenre}</td>
+										<td>{filmYear}</td>
+										<td>{}</td>
+									</tr>;
+						}
+					};
+
+					ReactDOM.render(
+						<Tr_input />,
+						document.getElementById('info_table')
+					)
+					return false
+				});
+			});
+
+
+		</script>
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-3866000-4']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="styles/reset.css">
+		<link rel="stylesheet" href="styles/style.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+		<script src= "js/main.js"></script>
+	</head>
+	<body>
+
+		<div id="display_library"></div>
+
+		<script type="text/babel">
+
+			class FilmLibrary extends React.Component{
+				render(){
+					return(
+						<section >
+							<div id="form_wrap">
+								<fieldset>
+									<legend>Добавление фильма</legend>
+									<FormFilmInfo />
+								</fieldset>
+							</div>
+							<div id="table_wrap">
+								<TableFilmInfo />
+							</div>
+						</section>
+					)
+				}
+			}
+/*20*/
+			class FormFilmInfo extends React.Component{
+				constructor(props){
+					super(props);
+					this.state = {
+						film_title : "",
+						film_genre : "",
+						film_year : ""
+					};
+					this.hendlerTitleChange = this.hendlerTitleChange.bind(this);
+					this.hendlerGenreChange = this.hendlerGenreChange.bind(this);
+					this.hendlerYearChange = this.hendlerYearChange.bind(this);
+					this.hendlerSubmit = this.hendlerSubmit.bind(this);
+				}
+
+				hendlerTitleChange(event){
+					event.preventDefault();
+					this.setState({film_title : event.target.value})
+				}
+
+				hendlerGenreChange(event){
+					event.preventDefault();
+					this.setState({film_genre: event.target.value})
+				}
+
+				hendlerYearChange(event){
+					event.preventDefault();
+					this.setState({film_year: event.target.value})
+				}
+
+				hendlerSubmit(event){
+					event.preventDefault();
+					var changeResults = this.state;
+
+					console.log("film_title is ", this.state.film_title);
+					console.log("film_genre is ", this.state.film_genre);
+					console.log("ffilm_year is ", this.state.film_year);
+				}
+
+				render(){
+					return(
+								<form id="form_film_info" onSubmit={this.hendlerSubmit}>
+									<input
+										type="text"
+										name="film_title"
+										placeholder="Название фильма"
+										value={this.state.film_title}
+										size="40"
+										onChange={this.hendlerTitleChange} />
+									<select
+										name="film_genre"
+										id="genre"
+										onChange = {this.hendlerGenreChange}>
+											<option value={this.state.film_genre}></option>
+									</select>
+									<select
+										name="film_year"
+										id="year"
+										onChange={this.hendlerYearChange}>
+											<option value={this.state.film_year}></option>
+									</select>
+									<button
+										id = "sbmt"
+										type="submit">Сохранить
+									</button>
+								</form>
+					);
+				}
+			}; /* end of FormFilmInfo */
+
+			class TableFilmInfo extends React.Component{
+				render(){
+
+					return(
+							<table>
+								<thead>
+									<tr>
+										<td>Название</td>
+										<td>Жанр</td>
+										<td>Год</td>
+										<td>Рейтинг</td>
+									</tr>
+								</thead>
+								<tbody id="info_table">
+								</tbody>
+							</table>
+					);
+				}
+			}; /* end of TableFilmInfo */
+
+
+			ReactDOM.render(
+				<FilmLibrary />,
+				document.getElementById('display_library')
+			);
+
+		var Years = [2000, 2001, 2002, 2003, 2004, 2005];
+		var Genres = ["Боевик", "Вестерн", "Детектив", "Документальный", "Комедия", "Приключения"];
+
+		createSelectList(Years, "year");
+		createSelectList(Genres, "genre");
+
+		function createSelectList(array_of_textfields, id_of_create_selectList){
+			var insertOption = document.getElementById(id_of_create_selectList);
+			for(let i=0; i < array_of_textfields.length; i++){
+				let newOption = document.createElement('option');
+				newOption.setAttribute("value", [i+1]);
+				newOption.appendChild(document.createTextNode(array_of_textfields[i]));
+				insertOption.appendChild(newOption)
+			}
+		}
+
+		</script>
+	</body>
+</html>

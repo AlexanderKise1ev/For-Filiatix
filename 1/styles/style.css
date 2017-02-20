@@ -1,0 +1,36 @@
+fieldset{
+	width: 80%;
+    height: 200px;
+    border: 1px solid black;
+    margin: 30px;
+    border-radius: 8px;
+    padding: 20px;
+}
+legend, #sbmt{
+	background: #1c8ff9;
+    border-radius: 5px;
+    padding: 4px;
+    color: #e7f9fa;
+}
+input, select{
+    display: block;
+}
+table{
+    width: 80%;
+    margin: 40px;
+}
+thead, tbody, td{
+    height: 30px;
+    padding: 10px 10px 0;
+    border: 2px solid #96af49;
+    line-height: 23px;
+}
+thead{
+    background-color: #a9c74d;
+    color: #f6fae1;
+
+}
+#form_wrap, #table_wrap{
+    width: 49%;
+    float: left;
+}
